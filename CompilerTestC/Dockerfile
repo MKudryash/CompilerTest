@@ -1,11 +1,16 @@
 # См. статью по ссылке https://aka.ms/customizecontainer, чтобы узнать как настроить контейнер отладки и как Visual Studio использует этот Dockerfile для создания образов для ускорения отладки.
 
 
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS gcc
+USER root
+RUN apk add --no-cache gcc musl-dev
 
 # Этот этап используется при запуске из VS в быстром режиме (по умолчанию для конфигурации отладки)
-FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
+FROM gcc AS base
 USER app
 WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
 
 
 # Этот этап используется для сборки проекта службы

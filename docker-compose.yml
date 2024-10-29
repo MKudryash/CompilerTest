@@ -7,9 +7,3 @@ services:
     volumes:
          - .:/app  
     working_dir: /app  
-  gccapp:
-    image: gcc:latest
-    tty: true
-    volumes:
-         - .:/app  
-    working_dir: /app  
