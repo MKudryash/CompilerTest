@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CompilerTestC": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

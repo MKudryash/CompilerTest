@@ -1,0 +1,15 @@
+services:
+  compilertestc:
+    image: ${DOCKER_REGISTRY-}compilertestc
+    build:
+      context: .
+      dockerfile: CompilerTestC/Dockerfile
+    volumes:
+         - .:/app  
+    working_dir: /app  
+  gccapp:
+    image: gcc:latest
+    tty: true
+    volumes:
+         - .:/app  
+    working_dir: /app  
