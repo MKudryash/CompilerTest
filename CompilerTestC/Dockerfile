@@ -5,7 +5,14 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS compile
 USER root
 # Устанавливаем Python, C, Java, C#
-RUN apk add --no-cache gcc musl-dev python3 py3-pip openjdk11-jdk 
+RUN apk add --no-cache gcc musl-dev python3 py3-pip openjdk11-jdk mono --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
+
+#FROM mcr.microsoft.com/dotnet/sdk:8.0 AS compile
+#USER root
+## Устанавливаем Python, C, Java, C#
+#RUN apt-get update && \
+    #apt-get -y install gcc mono-mcs python3 python3-pip openjdk-11-jdk && \
+    #rm -rf /var/lib/apt/lists/*
 
 
 # Этот этап используется при запуске из VS в быстром режиме (по умолчанию для конфигурации отладки)

@@ -50,8 +50,8 @@ namespace CompilerTestC.CompileCode
 
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                FileName = "csc.exe",
-                Arguments = $"-target:winexe {cFilePath}",
+                FileName = "mcs",
+                Arguments = $"{cFilePath}",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,

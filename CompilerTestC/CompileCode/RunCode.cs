@@ -71,6 +71,39 @@ namespace CompilerTestC.CompileCode
                 }
             }
         }
+        public static void RunCSScript(string outputFileName)
+        {
+            ProcessStartInfo startInfo2 = new ProcessStartInfo
+            {
+                FileName = "mono", // Запускаем скомпилированный код
+                Arguments= outputFileName,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (Process process = new Process { StartInfo = startInfo2 })
+            {
+                process.Start();
+
+                // Чтение вывода
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                process.WaitForExit();
+
+                // Выводим результат выполнения
+                Console.WriteLine(output);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    Console.WriteLine("Error:");
+                    Console.WriteLine(error);
+                }
+            }
+        }
+
+        
 
         public static void RunJavaScript(string scriptPath)
         {

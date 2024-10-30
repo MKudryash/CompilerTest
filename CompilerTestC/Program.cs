@@ -18,7 +18,7 @@ CompileCCode.CompileC(cFilePath, cOutputFileName);
 CompileCCode.CompileCSharp(cSharpFilePath);
 
 RunCode.RunCScript(cOutputFileName);
-RunCode.RunCScript("Test.exe");
+RunCode.RunCSScript("test.exe");
 
 RunCode.RunPythonScript(pyFilePath);
 RunCode.RunJavaScript(javaFilePath);
