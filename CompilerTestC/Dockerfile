@@ -1,12 +1,15 @@
 # См. статью по ссылке https://aka.ms/customizecontainer, чтобы узнать как настроить контейнер отладки и как Visual Studio использует этот Dockerfile для создания образов для ускорения отладки.
 
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS gcc
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS compile
 USER root
-RUN apk add --no-cache gcc musl-dev
+# Устанавливаем Python, C, Java, C#
+RUN apk add --no-cache gcc musl-dev python3 py3-pip openjdk11-jdk 
+
 
 # Этот этап используется при запуске из VS в быстром режиме (по умолчанию для конфигурации отладки)
-FROM gcc AS base
+FROM  compile AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
