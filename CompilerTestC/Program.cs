@@ -19,14 +19,19 @@ RunCode.RunScript($"gcc", $"{cFilePath} -o {cOutputFileName}"); //Зауск exe
 
 RunCode.RunScript($"./{cOutputFileName}", null); //Зауск exe Си
 
-/*RunCode.RunScript("dotnet-exec",cSharpFilePath); //Компиляция и запуск C#
+RunCode.RunScript("dotnet-exec", cSharpFilePath); //Компиляция и запуск C#
 
-RunCode.RunScript("python",pyFilePath); //Компиляция и запуск Pyhton
+RunCode.RunScript("python", pyFilePath); //Компиляция и запуск Pyhton
 
-RunCode.RunScript("java",javaFilePath); //Компиляция и запуск Java*/
+RunCode.RunScript("java", javaFilePath); //Компиляция и запуск Java
 
 FileInfo fileInfo = new FileInfo(cFilePath);
-fileInfo.Delete();
-
-fileInfo = new FileInfo(cOutputFileName+".exe");
-fileInfo.Delete();
+if (fileInfo.Exists)
+{
+    fileInfo.Delete();
+}
+fileInfo = new FileInfo(cOutputFileName);
+if (fileInfo.Exists)
+{
+    fileInfo.Delete();
+}
