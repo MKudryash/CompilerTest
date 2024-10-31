@@ -2,10 +2,12 @@
 
 
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS compile
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS compile
 USER root
 # Устанавливаем Python, C, Java, C#
-RUN apk add --no-cache gcc musl-dev python3 py3-pip openjdk11-jdk mono --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apk add --no-cache gcc musl-dev python3 py3-pip openjdk11-jdk
+ENV PATH=/root/.dotnet/tools:$PATH
+RUN dotnet tool update -g dotnet-execute && echo 'export "PATH=$PATH:/root/.dotnet/tools"' >> /etc/profile
 
 #FROM mcr.microsoft.com/dotnet/sdk:8.0 AS compile
 #USER root
