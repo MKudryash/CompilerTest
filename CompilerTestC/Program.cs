@@ -15,7 +15,7 @@ string cOutputFileName = "CodeC";
 await WriteCode.WriteCodeToFile("#include <stdio.h>\r\n\r\nint main(void)\r\n{\r\n\tprintf(\"Hello from C\");\r\n\treturn 0;\r\n}", cFilePath);
 await WriteCode.WriteCodeToFile("print(\"Hello from Python!\")", pyFilePath);
 
-RunCode.RunScript($"gcc", $"{cFilePath} -o {cOutputFileName}"); //Зауск exe Си
+RunCode.RunScript($"gcc", $"{cFilePath} -o {cOutputFileName}"); //Компиляция Си
 
 RunCode.RunScript($"./{cOutputFileName}", null); //Зауск exe Си
 
