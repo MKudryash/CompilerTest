@@ -13,7 +13,7 @@ namespace CompilerTestC.CompileCode
         /// Запускает один из возможных скриптов или exe файлов (C#, C, C++, Python, Java)
         /// </summary>
         /// <param name="fileName">Наименование команды или пакета (dotnet-exec, gcc, ./ name.exe, python, java)</param>
-        /// <param name="arguments">Наименование запускаемого файла (name.cs,name.c -o finishName, name.py, name.java)</param>
+        /// <param name="arguments">Наименование запускаемого файла/команда (name.cs,name.c -o finishName, name.py, name.java)</param>
         public static void RunScript(string fileName, string? arguments)
         {
             // Создание процесса с настройкой определенных параметров

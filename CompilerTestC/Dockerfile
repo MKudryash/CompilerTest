@@ -9,13 +9,6 @@ RUN apk add --no-cache gcc musl-dev python3 py3-pip openjdk11-jdk
 ENV PATH=/root/.dotnet/tools:$PATH
 RUN dotnet tool update -g dotnet-execute && echo 'export "PATH=$PATH:/root/.dotnet/tools"' >> /etc/profile
 
-#FROM mcr.microsoft.com/dotnet/sdk:8.0 AS compile
-#USER root
-## Устанавливаем Python, C, Java, C#
-#RUN apt-get update && \
-    #apt-get -y install gcc mono-mcs python3 python3-pip openjdk-11-jdk && \
-    #rm -rf /var/lib/apt/lists/*
-
 
 # Этот этап используется при запуске из VS в быстром режиме (по умолчанию для конфигурации отладки)
 FROM  compile AS base
