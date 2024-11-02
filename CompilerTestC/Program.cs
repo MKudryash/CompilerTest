@@ -20,8 +20,8 @@ new ArgumentsFunction("char","c"),
 //await WriteCode.WriteCodeToFile("#include <stdio.h>\r\n\r\nint sum(int a, int b)\r\n{\r\n\r\n}\r\n\r\nint main(int argc,char* argv []) {\r\n    for (int i = 0; i < argc; i++)\r\n    {\r\n        printf(\"%s \\n\", argv[i]);\r\n    }\r\n    return 0;\r\n}", cFilePath);
 await WriteCode.WriteCodeToFile(GenerateMain(arguments, "#include <stdio.h>"), cFilePath);
 await WriteCode.WriteCodeToFile("print(\"Hello from Python!\")", pyFilePath);
-
-Console.WriteLine(GenerateMain(arguments, "#include <stdio.h>"));
+await WriteCode.WriteCodeToFile("using System;\r\n\r\nclass Program\r\n{\r\n    static void Main(string[] args)\r\n    {\r\n        Console.WriteLine(\"Hello CSharp\");  // Теперь компилятор найдет Console\r\n    }\r\n}\r\n", cSharpFilePath);
+await WriteCode.WriteCodeToFile("public class test{ \r\n      \r\n    public static void main (String args[]){\r\n          \r\n        System.out.println(\"Hello from Java\");\r\n    }\r\n}", javaFilePath);
 
 RunCode.RunScript($"gcc", $"{cFilePath} -o {cOutputFileName}"); //Компиляция Си
 
@@ -29,13 +29,26 @@ RunCode.RunScript($"./{cOutputFileName}", " 1 2.2 sam"); //Зауск exe Си
 
 RunCode.RunScript("python", pyFilePath); //Компиляция и запуск Pyhton
 
-/*RunCode.RunScript("dotnet-exec", cSharpFilePath); //Компиляция и запуск C#
+RunCode.RunScript("dotnet-exec", cSharpFilePath); //Компиляция и запуск C#
 
-RunCode.RunScript("python", pyFilePath); //Компиляция и запуск Pyhton
-
-RunCode.RunScript("java", javaFilePath); //Компиляция и запуск Java*/
+RunCode.RunScript("java", javaFilePath); //Компиляция и запуск Java
 
 FileInfo fileInfo = new FileInfo(cFilePath);
+if (fileInfo.Exists)
+{
+    fileInfo.Delete();
+}
+fileInfo = new FileInfo(pyFilePath);
+if (fileInfo.Exists)
+{
+    fileInfo.Delete();
+}
+fileInfo = new FileInfo(cSharpFilePath);
+if (fileInfo.Exists)
+{
+    fileInfo.Delete();
+}
+fileInfo = new FileInfo(javaFilePath);
 if (fileInfo.Exists)
 {
     fileInfo.Delete();
