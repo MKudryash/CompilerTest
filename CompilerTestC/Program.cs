@@ -60,10 +60,6 @@ if (fileInfo.Exists)
 }
 
 
-
-/*Console.WriteLine("{0}", GenerateMain(arguments));*/
-
-/*argumens (int a, int b, char c)*/
 string GenerateMain(List<ArgumentsFunction> arguments, string libraries)
 {
     string declareArguments = "";
@@ -77,7 +73,8 @@ string GenerateMain(List<ArgumentsFunction> arguments, string libraries)
         initArguments += $"\tsscanf(argv[{i}], \"%{TheSpecifier(arg.TypeVariable)}\", {argumentAmpersand}";
         i++;
     }
-    return $"{libraries}\nint main(int argc, char* argv[]) {{\n{declareArguments}{initArguments} \n\tprintf(\"%d\\n\", a);\r\n\tprintf(\"%lf\\n\", b);\n\tprintf(\"%s\\n\", c);\n\treturn 0;\r\n}}";
+    string printVariable = "\n\tprintf(\"%d\\n\", a);\r\n\tprintf(\"%lf\\n\", b);\n\tprintf(\"%s\\n\", c);\n";
+    return $"{libraries}\nint main(int argc, char* argv[]) {{\n{declareArguments}{initArguments}{printVariable}\treturn 0;\r\n}}";
 }
 string TheSpecifier(string typeVariable)
 {
