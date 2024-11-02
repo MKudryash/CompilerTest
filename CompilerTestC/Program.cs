@@ -13,7 +13,15 @@ string cOutputFileName = "CodeC";
 List<ArgumentsFunction> arguments = new List<ArgumentsFunction>() {
 new ArgumentsFunction("int","a"),
 new ArgumentsFunction("double","b"),
-new ArgumentsFunction("char","c"),
+new ArgumentsFunction("char*","c"),
+};
+
+var theSpecifierType = new Dictionary<string, string>()
+{
+    {"char*","s" },
+    {"int","d" },
+    {"double","lf" },
+    {"float","f" },
 };
 
 /*Запись кода в файлы*/
@@ -22,10 +30,15 @@ await WriteCode.WriteCodeToFile(GenerateMain(arguments, "#include <stdio.h>"), c
 await WriteCode.WriteCodeToFile("print(\"Hello from Python!\")", pyFilePath);
 await WriteCode.WriteCodeToFile("using System;\r\n\r\nclass Program\r\n{\r\n    static void Main(string[] args)\r\n    {\r\n        Console.WriteLine(\"Hello CSharp\");  // Теперь компилятор найдет Console\r\n    }\r\n}\r\n", cSharpFilePath);
 await WriteCode.WriteCodeToFile("public class test{ \r\n      \r\n    public static void main (String args[]){\r\n          \r\n        System.out.println(\"Hello from Java\");\r\n    }\r\n}", javaFilePath);
+Console.WriteLine(GenerateMain(arguments, "#include <stdio.h>"));
 
 RunCode.RunScript($"gcc", $"{cFilePath} -o {cOutputFileName}"); //Компиляция Си
 
-RunCode.RunScript($"./{cOutputFileName}", " 1 2.2 sam"); //Зауск exe Си
+
+
+RunCode.RunScript($"gcc", $"{cFilePath} -o {cOutputFileName}"); //Компиляция Си
+
+RunCode.RunScript($"./{cOutputFileName}", " 1 2.2 \"Hello from C generate\""); //Запуск exe Си
 
 RunCode.RunScript("python", pyFilePath); //Компиляция и запуск Pyhton
 
@@ -62,35 +75,18 @@ if (fileInfo.Exists)
 
 string GenerateMain(List<ArgumentsFunction> arguments, string libraries)
 {
-    string declareArguments = "";
-    string initArguments = "";
+    string declareArguments = "", specifier, initArguments = "";
     int i = 1;
     foreach (var arg in arguments)
     {
-      
-        declareArguments += arg.TypeVariable == "char" ? $"\t{arg.TypeVariable} {arg.NameVariavle} [100];\n" : $"\t{arg.TypeVariable} {arg.NameVariavle};\n";
+        theSpecifierType.TryGetValue(arg.TypeVariable, out specifier);
+        declareArguments += arg.TypeVariable == "char*" ? $"\t{arg.TypeVariable} {arg.NameVariavle};\n" : $"\t{arg.TypeVariable} {arg.NameVariavle};\n";
         string argumentAmpersand = arg.TypeVariable == "char" ? $"{arg.NameVariavle});\n" : $"&{arg.NameVariavle});\n";
-        initArguments += $"\tsscanf(argv[{i}], \"%{TheSpecifier(arg.TypeVariable)}\", {argumentAmpersand}";
+        initArguments += arg.TypeVariable == "char*" ? $"\t{arg.NameVariavle} = argv[{i}];" :  $"\tsscanf(argv[{i}], \"%{specifier}\", {argumentAmpersand}";
         i++;
     }
     string printVariable = "\n\tprintf(\"%d\\n\", a);\r\n\tprintf(\"%lf\\n\", b);\n\tprintf(\"%s\\n\", c);\n";
     return $"{libraries}\nint main(int argc, char* argv[]) {{\n{declareArguments}{initArguments}{printVariable}\treturn 0;\r\n}}";
-}
-string TheSpecifier(string typeVariable)
-{
-    switch (typeVariable)
-    {
-        case "int":
-            return "d";
-        case "char":
-            return "s";
-        case "float":
-            return "f";
-        case "double":
-            return "lf";
-        default:
-            return "c";
-    }
 }
 
 class ArgumentsFunction
