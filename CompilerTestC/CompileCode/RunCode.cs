@@ -10,23 +10,31 @@ namespace CompilerTestC.CompileCode
     public static class RunCode
     {
         /// <summary>
-        /// Запускает один из возможных скриптов или exe файлов (C#, C, C++, Python, Java)
+        /// Создает один из возможных скриптов или exe файлов (C#, C, C++, Python, Java)
         /// </summary>
         /// <param name="fileName">Наименование команды или пакета (dotnet-exec, gcc, ./ name.exe, python, java)</param>
         /// <param name="arguments">Наименование запускаемого файла/команда (name.cs,name.c -o finishName, name.py, name.java)</param>
-        public static void RunScript(string fileName, string? arguments)
+        public static ProcessStartInfo CreateRunScript(string fileName, string? arguments)
         {
             // Создание процесса с настройкой определенных параметров
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            return new ProcessStartInfo
             {
-                FileName = fileName, 
+                FileName = fileName,
                 Arguments = arguments,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
+        }
 
+        /// <summary>
+        /// Запускает один из ранее созданных скриптов или exe файлов (C#, C, C++, Python, Java)
+        /// </summary>
+        /// <param name="startInfo">Созданный процесс скрипта</param>
+        /// <returns>Возвращает напечатанный результат кода (ошибка или результат функции) и его статус</returns>
+        public static (string answerCode, bool status) RunScript(ProcessStartInfo startInfo)
+        {
             using (Process process = new Process { StartInfo = startInfo })
             {
                 // Запуск созданного процесса
@@ -36,15 +44,12 @@ namespace CompilerTestC.CompileCode
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
 
+                // Ожидание конца завершение процесса (возможно стоит указать время?)
                 process.WaitForExit();
 
-                // Выводим результат выполнения
-                Console.WriteLine(output);
-                if (!string.IsNullOrEmpty(error))
-                {
-                    Console.WriteLine("Error:");
-                    Console.WriteLine(error);
-                }
+                //Возврат в зависимости от результата компиляции
+                if (!string.IsNullOrEmpty(error)) return (error, false);
+                else return (output, true);
             }
         }
     }
