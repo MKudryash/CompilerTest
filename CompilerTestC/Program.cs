@@ -85,6 +85,7 @@ DeleteFileFromDirectoryApp(cFilePath);
 DeleteFileFromDirectoryApp(cSharpFilePath);
 DeleteFileFromDirectoryApp(pyFilePath);
 DeleteFileFromDirectoryApp(javaFilePath);
+DeleteFileFromDirectoryApp("testuser.txt");
 
 
 void DeleteFileFromDirectoryApp(string outputFileName)
