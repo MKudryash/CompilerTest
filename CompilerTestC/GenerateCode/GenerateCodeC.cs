@@ -38,10 +38,10 @@ namespace CompilerTestC.GenerateCode
                 argumentsForFunction += arg.NameVariable + (arguments.Count > i ? "," : "");// Генерация переменных для запуска функции (к примеру: arg1, arg2)
                 i++;
             }
-            string printVariable = $"\n\tprintf(\"%{specifierFunction}\", {functionName}({argumentsForFunction}));";// Запускаем функции и выводим результат на экран
+            string printAnswer = $"\n\tprintf(\"%{specifierFunction}\", {functionName}({argumentsForFunction}));";// Запускаем функции и выводим результат на экран
 
             // Собираем весь код в едино с добавлением все в main
-            return $"{libs}\n {codeFunction} int main(int argc, char* argv[]) {{\n{declareArguments}{initArguments}{printVariable}\n\treturn 0;\r\n}}";
+            return $"{libs}\n {codeFunction} int main(int argc, char* argv[]) {{\n{declareArguments}{initArguments}{printAnswer}\n\treturn 0;\r\n}}";
         }
     }
 }

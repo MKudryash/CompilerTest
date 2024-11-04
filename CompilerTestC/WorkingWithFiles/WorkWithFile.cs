@@ -9,7 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace CompilerTestC.WorkingWithFiles
 {
     //Класс для работы с внешними файлами
-    public static class WorkWithCode
+    public static class WorkWithFile
     {
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace CompilerTestC.WorkingWithFiles
                     Console.WriteLine("Файла успешно удален");
 
                 }
-                Console.WriteLine("Файла не существует");
+                else Console.WriteLine("Файла не существует");
             }
             catch (Exception ex)
             {
